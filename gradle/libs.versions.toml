@@ -1,6 +1,6 @@
 [versions]
 agp = "8.7.3"
-kotlin = "2.0.0"
+kotlin = "2.1.0"
 coreKtx = "1.15.0"
 junit = "4.13.2"
 junitVersion = "1.2.1"
@@ -13,8 +13,9 @@ serializationPlugin = "2.0.21"
 serialization = "1.7.3"
 androidxHiltNavigationCompose = "1.2.0"
 androidxTestExt = "1.2.1"
-hilt = "2.44.2"
+hilt = "2.53.1"
 hiltExt = "1.2.0"
+kspVersion = "2.1.0-1.0.29"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -34,7 +35,7 @@ androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
-androidx-compose-ui-util = { group = "androidx.compose.ui", name = "ui-util"}
+androidx-compose-ui-util = { group = "androidx.compose.ui", name = "ui-util" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt" }
@@ -44,7 +45,9 @@ serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serializ
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
+hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-android-ksp = { id = "com.google.devtools.ksp", version.ref = "kspVersion" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "serializationPlugin" }
 
