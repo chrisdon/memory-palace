@@ -45,6 +45,21 @@ val stationEntity2 = StationEntity(
     phraseMeaning = "I read a newspaper",
     channelTypeId = 1L
 )
+val station1 = Station(
+    id = 1,
+    name = "Porch",
+    palaceId = 1L,
+    order = 1,
+    word = "Aploksne",
+    wordGender = "female",
+    image = "Visa card",
+    action = "Spinning",
+    meaning = "Envelope",
+    meaningGender = "n/a",
+    phrase = "Man vajaziga aploksne",
+    phraseMeaning = "I need an envelope",
+    channelTypeId = 1L
+)
 val station2 = Station(
     id = 2,
     name = "Hallway",

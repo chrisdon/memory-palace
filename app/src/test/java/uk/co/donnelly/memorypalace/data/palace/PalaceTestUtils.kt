@@ -22,6 +22,20 @@ val palaceDomainId0 = Palace(
     id = 0
 )
 
+val palaceDomainId1 = Palace(
+    name = "Bermuda",
+    type = "",
+    imageUrl = null,
+    id = 1
+)
+
+val palaceDomainId1Amended = Palace(
+    name = "Barbados",
+    type = "",
+    imageUrl = null,
+    id = 1
+)
+
 val palace1Amended = PalaceEntity(
     name = "Addington",
     type = "",

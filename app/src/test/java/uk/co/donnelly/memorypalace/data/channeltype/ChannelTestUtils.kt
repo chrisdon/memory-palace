@@ -20,3 +20,8 @@ val channelTypeDomainSpanish = ChannelType(
     colour = 1L,
     id = 2
 )
+val channelTypeDomainGerman = ChannelType(
+    name = "German",
+    colour = 1L,
+    id = 1
+)

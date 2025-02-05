@@ -2,7 +2,9 @@ package uk.co.donnelly.memorypalace.data.channeltype
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.withContext
 import uk.co.donnelly.memorypalace.domain.entities.ChannelType
 
 interface ChannelTypeDataSource {
@@ -17,11 +19,11 @@ class ChannelTypeDataSourceImpl(
     private val dispatcher: CoroutineDispatcher,
     private val channelTypeEntityMapper: ChannelTypeMapper
 ) : ChannelTypeDataSource {
-    override suspend fun saveChannelType(channelType: ChannelType) {
+    override suspend fun saveChannelType(channelType: ChannelType) = withContext(dispatcher) {
         channelTypeDao.insertOrUpdate(channelTypeEntityMapper.toChannelTypeEntity(channelType))
     }
 
-    override suspend fun deleteChannelType(channelType: ChannelType) {
+    override suspend fun deleteChannelType(channelType: ChannelType) = withContext(dispatcher) {
         channelTypeDao.deleteChannelType(channelTypeEntityMapper.toChannelTypeEntity(channelType))
     }
 
@@ -42,5 +44,23 @@ class ChannelTypeDataSourceImpl(
             }
         }
     }
+}
 
+class ChannelTypeDataSourceFake : ChannelTypeDataSource {
+    private var channelList: MutableList<ChannelType> = mutableListOf()
+    override suspend fun saveChannelType(channelType: ChannelType) {
+        channelList.add(channelType)
+    }
+
+    override suspend fun deleteChannelType(channelType: ChannelType) {
+        channelList.remove(channelType)
+    }
+
+    override fun getChannelTypes(): Flow<List<ChannelType>> {
+        return flowOf(channelList)
+    }
+
+    override fun getChannelType(channelTypeId: Long): Flow<ChannelType?> {
+        return flowOf(channelList.find { it.id == channelTypeId })
+    }
 }

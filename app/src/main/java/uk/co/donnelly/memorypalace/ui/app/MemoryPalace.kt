@@ -10,12 +10,15 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -24,6 +27,7 @@ import androidx.navigation.compose.rememberNavController
 import kotlinx.serialization.Serializable
 import uk.co.donnelly.memorypalace.ui.home.HomeScreen
 import uk.co.donnelly.memorypalace.ui.palacelist.PalaceListScreen
+import uk.co.donnelly.memorypalace.ui.palacelist.PalaceListViewModel
 
 data class TopLevelRoute<T : Any>(val name: String, val route: T, val icon: ImageVector)
 
@@ -32,6 +36,9 @@ object Home
 
 @Serializable
 object PalaceList
+
+@Serializable
+object AddPalace
 
 val topLevelRoutes = listOf(
     TopLevelRoute("Home", Home, Icons.Default.Home),
@@ -83,7 +90,17 @@ fun MemoryPalace(
                 HomeScreen()
             }
             composable<PalaceList> {
-                PalaceListScreen()
+                val viewModel = hiltViewModel<PalaceListViewModel>()
+                val palaceState by viewModel.palacesFlow.collectAsState()
+                PalaceListScreen(
+                    palaceState = palaceState,
+                    onNewPalace = {
+                        navController.navigate(AddPalace)
+                    }
+                )
+            }
+            composable<AddPalace> {
+
             }
         }
     }

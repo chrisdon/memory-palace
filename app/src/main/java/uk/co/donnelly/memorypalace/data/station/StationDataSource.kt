@@ -2,6 +2,7 @@ package uk.co.donnelly.memorypalace.data.station
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import uk.co.donnelly.memorypalace.domain.entities.Station
@@ -22,7 +23,7 @@ class StationDataSourceImpl(
         stationDao.insertOrUpdate(stationEntityMapper.toStationEntity(station))
     }
 
-    override suspend fun deleteStation(station: Station) {
+    override suspend fun deleteStation(station: Station) = withContext(dispatcher) {
         stationDao.deleteStation(stationEntityMapper.toStationEntity(station))
     }
 
@@ -43,5 +44,24 @@ class StationDataSourceImpl(
                 null
             }
         }
+    }
+}
+
+class StationDataSourceFake : StationDataSource {
+    private var stationList: MutableList<Station> = mutableListOf()
+    override suspend fun saveStation(station: Station) {
+        stationList.add(station)
+    }
+
+    override suspend fun deleteStation(station: Station) {
+        stationList.remove(station)
+    }
+
+    override suspend fun getStations(palaceId: Long): Flow<List<Station>> {
+        return flowOf(stationList)
+    }
+
+    override suspend fun getStation(stationId: Long): Flow<Station?> {
+        return flowOf(stationList.find { it.id == stationId })
     }
 }
