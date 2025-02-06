@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import uk.co.donnelly.memorypalace.R
 import uk.co.donnelly.memorypalace.domain.entities.Palace
+import uk.co.donnelly.memorypalace.ui.common.ErrorScreen
 import uk.co.donnelly.memorypalace.ui.common.Loading
 import uk.co.donnelly.memorypalace.ui.theme.MemoryPalaceTheme
 
@@ -62,7 +63,7 @@ fun PalaceListScreen(
                     }
                 }
                 is PalaceListUiState.Error -> {
-
+                    ErrorScreen()
                 }
             }
         }
@@ -74,6 +75,14 @@ fun PalaceListScreen(
 fun PalaceListPreview() {
     MemoryPalaceTheme {
         PalaceListScreen(PalaceListUiState.Success(previewPalaces()))
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun PalaceListPreviewEmpty() {
+    MemoryPalaceTheme {
+        PalaceListScreen(PalaceListUiState.Success(listOf()))
     }
 }
 
