@@ -14,6 +14,7 @@ import uk.co.donnelly.memorypalace.data.palace.PalaceDataSourceImpl
 import uk.co.donnelly.memorypalace.data.palace.PalaceMapperImpl
 import uk.co.donnelly.memorypalace.data.palace.PalaceRepositoryImpl
 import uk.co.donnelly.memorypalace.domain.repositories.PalaceRepository
+import uk.co.donnelly.memorypalace.domain.usecases.AddPalaceUseCase
 import uk.co.donnelly.memorypalace.domain.usecases.GetPalacesUseCase
 import uk.co.donnelly.memorypalace.domain.usecases.GetPalacesUseCaseImpl
 import javax.inject.Singleton
@@ -25,6 +26,12 @@ object PalaceListModule {
     @Singleton
     fun provideGetPalacesUseCase(palaceRepository: PalaceRepository): GetPalacesUseCase {
         return GetPalacesUseCaseImpl(palaceRepository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideAddPalaceUseCase(palaceRepository: PalaceRepository): AddPalaceUseCase {
+        return AddPalaceUseCase(palaceRepository)
     }
 
     @Provides

@@ -26,7 +26,7 @@ import uk.co.donnelly.memorypalace.ui.theme.MemoryPalaceTheme
 fun PalaceListScreen(
     palaceState: PalaceListUiState,
     onNewPalace: () -> Unit = {},
-    onPalace: (Palace) -> Unit = {}
+    onSelectedPalace: (Palace) -> Unit = {}
 ) {
     Scaffold(
         floatingActionButton = {
@@ -56,7 +56,7 @@ fun PalaceListScreen(
                         LazyColumn {
                             items(palaceList) { palace ->
                                 PalaceItemCard(palaceItem = palace, onClick = { palaceItem ->
-                                    onPalace(palaceItem)
+                                    onSelectedPalace(palaceItem)
                                 })
                             }
                         }

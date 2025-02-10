@@ -13,6 +13,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import uk.co.donnelly.memorypalace.R
 import uk.co.donnelly.memorypalace.data.palace.palaceList
+import uk.co.donnelly.memorypalace.ui.common.TAG_LOADING
 import uk.co.donnelly.memorypalace.ui.theme.MemoryPalaceTheme
 
 @RunWith(AndroidJUnit4::class)
@@ -30,7 +31,7 @@ class PalaceListScreenTest {
             MemoryPalaceTheme {
                 PalaceListScreen(
                     palaceState = state,
-                    onPalace = {
+                    onSelectedPalace = {
                         onPalaceTapped++
                     },
                     onNewPalace = {
@@ -86,7 +87,7 @@ class PalaceListScreenTest {
         setupScreen(PalaceListUiState.Loading)
 
         composeTestRule
-            .onNodeWithTag(testTag = "Loading")
+            .onNodeWithTag(testTag = TAG_LOADING)
             .assertExists()
     }
 }

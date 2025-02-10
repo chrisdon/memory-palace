@@ -4,4 +4,7 @@
     <string name="add_palace_fab">Add a palace</string>
     <string name="no_palaces">No palaces to display as yet</string>
     <string name="error_message">Oh what????</string>
+    <string name="add_palace_name">Name</string>
+    <string name="add_palace">Add Palace</string>
+    <string name="save_palace_content_desc">Save palace</string>
 </resources>

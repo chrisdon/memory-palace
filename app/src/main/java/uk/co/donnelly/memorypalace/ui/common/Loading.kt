@@ -11,6 +11,8 @@ import androidx.compose.ui.platform.testTag
 @Composable
 fun Loading() {
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        CircularProgressIndicator(modifier = Modifier.testTag("Loading"))
+        CircularProgressIndicator(modifier = Modifier.testTag(TAG_LOADING))
     }
 }
+
+const val TAG_LOADING = "Loading"

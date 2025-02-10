@@ -25,6 +25,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import kotlinx.serialization.Serializable
+import uk.co.donnelly.memorypalace.ui.addpalace.AddPalaceScreen
+import uk.co.donnelly.memorypalace.ui.addpalace.AddPalaceViewModel
 import uk.co.donnelly.memorypalace.ui.home.HomeScreen
 import uk.co.donnelly.memorypalace.ui.palacelist.PalaceListScreen
 import uk.co.donnelly.memorypalace.ui.palacelist.PalaceListViewModel
@@ -96,11 +98,20 @@ fun MemoryPalace(
                     palaceState = palaceState,
                     onNewPalace = {
                         navController.navigate(AddPalace)
+                    },
+                    onSelectedPalace = { palace ->
+
                     }
                 )
             }
             composable<AddPalace> {
-
+                val viewModel = hiltViewModel<AddPalaceViewModel>()
+                AddPalaceScreen(
+                    onAddPalace = { palace ->
+                        viewModel.savePalace(palace)
+                        navController.popBackStack()
+                    }
+                )
             }
         }
     }

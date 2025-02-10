@@ -3,6 +3,7 @@ package uk.co.donnelly.memorypalace.ui.palacelist
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
@@ -22,6 +23,12 @@ fun PalaceItemCard(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center
     ) {
-        Text(text = palaceItem.name, fontSize = 20.sp, modifier = Modifier.fillMaxWidth().padding(16.dp).clickable { onClick(palaceItem) })
+        Text(
+            text = palaceItem.name,
+            fontSize = 20.sp,
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable { onClick(palaceItem) }
+                .padding(32.dp))
     }
 }
