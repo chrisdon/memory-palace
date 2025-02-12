@@ -7,4 +7,17 @@
     <string name="add_palace_name">Name</string>
     <string name="add_palace">Add Palace</string>
     <string name="save_palace_content_desc">Save palace</string>
+    <string name="add_station_fab">Add a station</string>
+    <string name="title_loading">Loading</string>
+    <string name="no_stations">No stations to display as yet</string>
+    <string name="cancel">Cancel</string>
+    <string name="delete">Delete</string>
+    <string name="menu_action_save">Save</string>
+    <string name="menu_action_edit">Edit</string>
+    <string name="delete_popup_title">Are you sure?</string>
+    <string name="delete_popup_text">There\'s no going back from this you know</string>
+    <string name="delete_popup_negative_button_text">@string/cancel</string>
+    <string name="delete_popup_positive_button_text">@string/delete</string>
+    <string name="edit_palace_content_desc">Edit palace</string>
+    <string name="delete_palace_content_desc">Save palace</string>
 </resources>

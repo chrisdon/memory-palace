@@ -19,7 +19,7 @@ class PalaceListViewModel @Inject constructor(
         PalaceListUiState.Success(palaces)
     }
         .catch {
-            PalaceListUiState.Error
+            PalaceListUiState.Error(it)
         }
         .stateIn(
             scope = viewModelScope,
@@ -31,5 +31,5 @@ class PalaceListViewModel @Inject constructor(
 sealed class PalaceListUiState {
     data object Loading : PalaceListUiState()
     data class Success(val palaces: List<Palace>) : PalaceListUiState()
-    data object Error : PalaceListUiState()
+    data class Error(val t: Throwable) : PalaceListUiState()
 }

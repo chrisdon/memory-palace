@@ -1,13 +1,11 @@
 package uk.co.donnelly.memorypalace.di
 
-import android.content.Context
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
-import dagger.hilt.components.SingletonComponent
+import dagger.hilt.android.components.ViewModelComponent
+import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.Dispatchers
-import uk.co.donnelly.memorypalace.data.db.PalaceDatabase
 import uk.co.donnelly.memorypalace.data.palace.PalaceDao
 import uk.co.donnelly.memorypalace.data.palace.PalaceDataSource
 import uk.co.donnelly.memorypalace.data.palace.PalaceDataSourceImpl
@@ -15,46 +13,48 @@ import uk.co.donnelly.memorypalace.data.palace.PalaceMapperImpl
 import uk.co.donnelly.memorypalace.data.palace.PalaceRepositoryImpl
 import uk.co.donnelly.memorypalace.domain.repositories.PalaceRepository
 import uk.co.donnelly.memorypalace.domain.usecases.AddPalaceUseCase
+import uk.co.donnelly.memorypalace.domain.usecases.DeletePalaceUseCase
+import uk.co.donnelly.memorypalace.domain.usecases.GetPalaceUseCase
 import uk.co.donnelly.memorypalace.domain.usecases.GetPalacesUseCase
 import uk.co.donnelly.memorypalace.domain.usecases.GetPalacesUseCaseImpl
 import javax.inject.Singleton
 
 @Module
-@InstallIn(SingletonComponent::class)
-object PalaceListModule {
+@InstallIn(ViewModelComponent::class)
+object PalaceModule {
     @Provides
-    @Singleton
+    @ViewModelScoped
     fun provideGetPalacesUseCase(palaceRepository: PalaceRepository): GetPalacesUseCase {
         return GetPalacesUseCaseImpl(palaceRepository)
     }
 
     @Provides
-    @Singleton
+    @ViewModelScoped
     fun provideAddPalaceUseCase(palaceRepository: PalaceRepository): AddPalaceUseCase {
         return AddPalaceUseCase(palaceRepository)
     }
 
     @Provides
-    @Singleton
-    fun providePalaceRepository(palaceDataSource: PalaceDataSource): PalaceRepository {
-        return PalaceRepositoryImpl(palaceDataSource)
+    @ViewModelScoped
+    fun provideGetPalaceUseCase(palaceRepository: PalaceRepository): GetPalaceUseCase {
+        return GetPalaceUseCase(palaceRepository)
     }
 
     @Provides
-    @Singleton
+    @ViewModelScoped
+    fun provideDeletePalaceUseCase(palaceRepository: PalaceRepository): DeletePalaceUseCase {
+        return DeletePalaceUseCase(palaceRepository)
+    }
+
+    @Provides
+    @ViewModelScoped
     fun providePalaceDataSource(palaceDao: PalaceDao): PalaceDataSource {
         return PalaceDataSourceImpl(palaceDao, Dispatchers.IO, PalaceMapperImpl())
     }
 
     @Provides
-    @Singleton
-    fun providePalaceDao(db: PalaceDatabase): PalaceDao {
-        return db.palaceDao()
-    }
-
-    @Provides
-    @Singleton
-    fun provideDatabase(@ApplicationContext appContext: Context): PalaceDatabase {
-        return PalaceDatabase.getDatabase(appContext)
+    @ViewModelScoped
+    fun providePalaceRepository(palaceDataSource: PalaceDataSource): PalaceRepository {
+        return PalaceRepositoryImpl(palaceDataSource)
     }
 }

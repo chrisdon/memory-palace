@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
+import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runCurrent
 import kotlinx.coroutines.test.runTest
@@ -21,7 +22,9 @@ import kotlinx.coroutines.test.setMain
 import org.junit.After
 import org.junit.Before
 import org.junit.Ignore
+import org.junit.Rule
 import org.junit.Test
+import uk.co.donnelly.memorypalace.MainCoroutineRule
 import uk.co.donnelly.memorypalace.data.palace.palaceDomain
 import uk.co.donnelly.memorypalace.data.palace.palaceDomain2
 import uk.co.donnelly.memorypalace.domain.entities.Palace
@@ -30,19 +33,12 @@ import uk.co.donnelly.memorypalace.domain.usecases.GetPalacesUseCaseFake
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class PalaceListViewModelTest {
+    @get:Rule
+    var mainCoroutineRule = MainCoroutineRule()
+
     private val palaceFlow = MutableStateFlow<List<Palace>>(listOf())
     private val usecase: GetPalacesUseCase = GetPalacesUseCaseFake(palaceFlow)
     private val sut = PalaceListViewModel(usecase)
-
-    @Before
-    fun setup() {
-        Dispatchers.setMain(StandardTestDispatcher()) // !!!
-    }
-
-    @After
-    fun teardown() {
-        Dispatchers.resetMain()
-    }
 
     @Test
     @Ignore("Fix broken test")
@@ -51,10 +47,8 @@ class PalaceListViewModelTest {
         val expectedResult = PalaceListUiState.Success(list)
 
         palaceFlow.emit(list)
-        delay(250)
-        sut.palacesFlow.test {
-            assertEquals(expectedResult, awaitItem())
-            awaitComplete()
-        }
+        advanceUntilIdle()
+
+        assertEquals(expectedResult, sut.palacesFlow.value)
     }
 }

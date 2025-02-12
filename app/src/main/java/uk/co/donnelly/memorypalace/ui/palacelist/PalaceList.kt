@@ -1,5 +1,6 @@
 package uk.co.donnelly.memorypalace.ui.palacelist
 
+import android.util.Log
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -63,6 +64,7 @@ fun PalaceListScreen(
                     }
                 }
                 is PalaceListUiState.Error -> {
+                    Log.e("PalaceListScreen", palaceState.t.toString())
                     ErrorScreen()
                 }
             }

@@ -3,18 +3,15 @@ package uk.co.donnelly.memorypalace.ui.addpalace
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Save
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -29,6 +26,7 @@ import uk.co.donnelly.memorypalace.R
 import uk.co.donnelly.memorypalace.domain.entities.Palace
 import uk.co.donnelly.memorypalace.ui.common.ImageDisplay
 import uk.co.donnelly.memorypalace.ui.common.PalaceInputText
+import uk.co.donnelly.memorypalace.ui.theme.PalaceTopAppBarColors
 
 @OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterial3Api::class)
 @Composable
@@ -87,13 +85,7 @@ fun AddPalaceScreen(
                     }
 
                 },
-                colors = TopAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primary,
-                    scrolledContainerColor = MaterialTheme.colorScheme.primary,
-                    navigationIconContentColor = MaterialTheme.colorScheme.onPrimary,
-                    titleContentColor = MaterialTheme.colorScheme.onPrimary,
-                    actionIconContentColor = MaterialTheme.colorScheme.onPrimary
-                )
+                colors = PalaceTopAppBarColors()
             )
         }
     )

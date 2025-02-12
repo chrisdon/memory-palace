@@ -2,6 +2,7 @@ package uk.co.donnelly.memorypalace.data.station
 
 import junit.framework.TestCase.assertEquals
 import org.junit.Test
+import uk.co.donnelly.memorypalace.data.channeltype.channels
 
 class StationMapperTest {
     val sut = StationMapperImpl()
@@ -22,5 +23,11 @@ class StationMapperTest {
     fun testToDataNoId() {
         val dataEntity = sut.toStationEntity(station2)
         assertEquals(stationEntity2, dataEntity)
+    }
+
+    @Test
+    fun testToStationDisplay() {
+        val result = sut.toDisplayStations(stations, channels)
+        assertEquals(stationDisplays, result)
     }
 }

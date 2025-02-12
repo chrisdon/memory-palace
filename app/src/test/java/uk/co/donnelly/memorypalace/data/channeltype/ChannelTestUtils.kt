@@ -25,3 +25,5 @@ val channelTypeDomainGerman = ChannelType(
     colour = 1L,
     id = 1
 )
+
+val channels = listOf(channelTypeDomainFrench, channelTypeDomainSpanish, channelTypeDomainGerman)

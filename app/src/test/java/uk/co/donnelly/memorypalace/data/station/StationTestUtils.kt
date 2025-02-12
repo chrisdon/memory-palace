@@ -1,6 +1,8 @@
 package uk.co.donnelly.memorypalace.data.station
 
+import uk.co.donnelly.memorypalace.data.channeltype.channelTypeDomainGerman
 import uk.co.donnelly.memorypalace.domain.entities.Station
+import uk.co.donnelly.memorypalace.ui.station.StationDisplay
 
 val stationEntity = StationEntity(
     name = "Front door",
@@ -127,3 +129,9 @@ val updatedStations = listOf(station1Amended, station2Amended).map {
     }
     station
 }
+val stations = listOf(station1, station2)
+val stationDisplays = listOf(
+    StationDisplay(station1, channelTypeDomainGerman),
+    StationDisplay(station2, channelTypeDomainGerman)
+)
+

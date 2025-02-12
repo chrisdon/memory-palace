@@ -24,10 +24,14 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.toRoute
 import kotlinx.serialization.Serializable
 import uk.co.donnelly.memorypalace.ui.addpalace.AddPalaceScreen
 import uk.co.donnelly.memorypalace.ui.addpalace.AddPalaceViewModel
 import uk.co.donnelly.memorypalace.ui.home.HomeScreen
+import uk.co.donnelly.memorypalace.ui.palace.PalaceScreen
+import uk.co.donnelly.memorypalace.ui.palace.PalaceUiState
+import uk.co.donnelly.memorypalace.ui.palace.PalaceViewModel
 import uk.co.donnelly.memorypalace.ui.palacelist.PalaceListScreen
 import uk.co.donnelly.memorypalace.ui.palacelist.PalaceListViewModel
 
@@ -41,6 +45,9 @@ object PalaceList
 
 @Serializable
 object AddPalace
+
+@Serializable 
+data class Palace(val id: Long)
 
 val topLevelRoutes = listOf(
     TopLevelRoute("Home", Home, Icons.Default.Home),
@@ -100,7 +107,7 @@ fun MemoryPalace(
                         navController.navigate(AddPalace)
                     },
                     onSelectedPalace = { palace ->
-
+                        navController.navigate(Palace(id = palace.id))
                     }
                 )
             }
@@ -109,6 +116,20 @@ fun MemoryPalace(
                 AddPalaceScreen(
                     onAddPalace = { palace ->
                         viewModel.savePalace(palace)
+                        navController.popBackStack()
+                    }
+                )
+            }
+            composable<Palace> { backStackEntry ->
+                val palaceNav = backStackEntry.toRoute<Palace>()
+                val viewModel = hiltViewModel<PalaceViewModel>()
+                viewModel.getPalace(palaceNav.id)
+                val palaceState by viewModel.uiState.collectAsState()
+                PalaceScreen(
+                    palaceState = palaceState,
+                    onSavePalace = viewModel::savePalace,
+                    onDeletePalace = { deletedPalace ->
+                        viewModel.deletePalace(deletedPalace)
                         navController.popBackStack()
                     }
                 )

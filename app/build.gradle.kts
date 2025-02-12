@@ -64,6 +64,7 @@ dependencies {
     implementation(libs.androidx.ktx)
     implementation(libs.androidx.material.icons.extended)
     implementation(libs.coil)
+    implementation(libs.accompanist.permissions)
     testImplementation(libs.junit)
     testImplementation(libs.room.testing)
     testImplementation(libs.mockito.core)
