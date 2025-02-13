@@ -75,7 +75,7 @@ class PalaceListScreenTest {
 
     @Test
     fun verifyError() {
-        setupScreen(PalaceListUiState.Error)
+        setupScreen(PalaceListUiState.Error(Exception("Boom")))
 
         composeTestRule
             .onNodeWithText(context.getString(R.string.error_message))

@@ -20,15 +20,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.core.net.toUri
 import coil3.compose.rememberAsyncImagePainter
 import coil3.request.ImageRequest
+import java.io.File
+import java.util.UUID
 
 @Composable
 fun ImageDisplay(
     onImageUri: (Uri?) -> Unit = { }
 ) {
     var photoUri: Uri? by remember { mutableStateOf(null) }
-
+    val context = LocalContext.current
     val launcher =
         rememberLauncherForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
             photoUri = uri

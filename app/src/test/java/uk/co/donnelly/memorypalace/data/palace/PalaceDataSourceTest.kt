@@ -10,16 +10,19 @@ import org.mockito.kotlin.any
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
+import uk.co.donnelly.memorypalace.data.common.ImageUtilFake
 
 class PalaceDataSourceTest {
     private val dao: PalaceDao = mock()
     private val mapper = PalaceMapperImpl()
+    private val imageUtil = ImageUtilFake()
 
     @OptIn(ExperimentalCoroutinesApi::class)
     private val sut = PalaceDataSourceImpl(
         palaceDao = dao,
         dispatcher = UnconfinedTestDispatcher(),
-        palaceEntityMapper = mapper
+        palaceEntityMapper = mapper,
+        imageUtil = imageUtil
     )
 
     @Test

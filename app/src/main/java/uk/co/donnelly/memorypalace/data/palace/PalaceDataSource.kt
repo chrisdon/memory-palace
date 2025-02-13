@@ -5,6 +5,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
+import uk.co.donnelly.memorypalace.data.common.ImageUtil
 import uk.co.donnelly.memorypalace.domain.entities.Palace
 
 interface PalaceDataSource {
@@ -18,10 +19,12 @@ interface PalaceDataSource {
 class PalaceDataSourceImpl(
     private val palaceDao: PalaceDao,
     private val dispatcher: CoroutineDispatcher,
-    private val palaceEntityMapper: PalaceMapper
+    private val palaceEntityMapper: PalaceMapper,
+    private val imageUtil: ImageUtil
 ) : PalaceDataSource {
     override suspend fun savePalace(palace: Palace) = withContext(dispatcher) {
-        palaceDao.insertOrUpdate(palaceEntityMapper.toPalaceEntity(palace))
+        val palaceToSave = storeImageAsFile(palace)
+        palaceDao.insertOrUpdate(palaceEntityMapper.toPalaceEntity(palaceToSave))
     }
 
     override suspend fun updatePalace(palace: Palace) = withContext(dispatcher) {
@@ -48,6 +51,14 @@ class PalaceDataSourceImpl(
             } else {
                 null
             }
+        }
+    }
+
+    private fun storeImageAsFile(palace: Palace): Palace {
+        return if (palace.imageUrl != null) {
+            palace.copy(imageUrl = imageUtil.storeImageAsFile(palace.imageUrl, palace.id))
+        } else {
+            palace
         }
     }
 }
