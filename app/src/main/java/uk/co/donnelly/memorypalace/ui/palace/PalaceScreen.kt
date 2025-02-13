@@ -114,14 +114,9 @@ fun PalaceScreen(
                         )
                     } else {
                         if (isDisplayMode) {
-                            Log.d("PalaceScreen", palace.toString())
                             PalaceDisplayMode(padding, palace, stations, onDisplayStation)
                         } else {
-                            PalaceEditMode(
-                                name,
-                                onNameChange,
-                                setImagePath
-                            )
+                            PalaceEditMode(padding, name, onNameChange, setImagePath)
                         }
                     }
                 },
@@ -219,13 +214,13 @@ fun PalaceDisplayMode(
                 }
             }
         }
-
     }
 }
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun PalaceEditMode(
+    paddingValues: PaddingValues,
     name: String,
     onNameChange: (String) -> Unit,
     setImagePath: (String?) -> Unit
@@ -235,21 +230,21 @@ fun PalaceEditMode(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp)
+            .padding(paddingValues)
     ) {
-        ImageDisplay(
-            onImageUri = { uri ->
-                setImagePath(uri.toString())
-            }
-        )
         PalaceInputText(
             text = name,
             label = stringResource(id = R.string.add_palace_name),
             onTextChange = onNameChange,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 0.dp, vertical = 16.dp)
+                .padding(all = 16.dp)
                 .testTag(TAG_PALACE_INPUT_FIELD)
+        )
+        ImageDisplay(
+            onImageUri = { uri ->
+                setImagePath(uri.toString())
+            }
         )
     }
 }
